@@ -1,10 +1,11 @@
-/*
- * AppConstants
- * These are the variables that determine what our central data store (reducer.js)
- * changes in our state. When you add a new action, you have to add a new constant here
- *
- * Follow this format:
- * export const YOUR_ACTION_CONSTANT = 'YOUR_ACTION_CONSTANT';
- */
-export const CHANGE_PROJECT_NAME = 'CHANGE_PROJECT_NAME';
-export const CHANGE_OWNER_NAME = 'CHANGE_OWNER_NAME';
+export const ALL_RACES = ['black', 'white', 'hispanic', 'api'];
+
+export const CHANGE_CITY_PREFIX = 'CHANGE_CITY_PREFIX';
+export const CHANGE_CRIME_RATE = 'CHANGE_CRIME_RATE';
+export const CHANGE_MURDER_RATE = 'CHANGE_MURDER_RATE';
+export const CHANGE_POPULATION = 'CHANGE_POPULATION';
+export const CHANGE_STATE = 'CHANGE_STATE';
+export const LOAD_DATA = 'LOAD_DATA';
+export const LOAD_DATA_ERROR = 'LOAD_DATA_ERROR';
+export const LOAD_DATA_SUCCESS = 'LOAD_DATA_SUCCESS';
+export const TOGGLE_RACE = 'TOGGLE_RACE';

@@ -27,11 +27,9 @@ if ('serviceWorker' in navigator) {
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route } from 'react-router';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import FontFaceObserver from 'fontfaceobserver';
-import createHistory from 'history/lib/createBrowserHistory';
 
 // Observer loading of Open Sans (to remove open sans, remove the <link> tag in the index.html file and this observer)
 const openSansObserver = new FontFaceObserver('Open Sans', {});
@@ -44,10 +42,7 @@ openSansObserver.check().then(() => {
 });
 
 // Import the pages
-import HomePage from './components/pages/HomePage.react';
-import ReadmePage from './components/pages/ReadmePage.react';
-import NotFoundPage from './components/pages/NotFound.react';
-import App from './components/App.react';
+import CitiesGraphic from './components/CitiesGraphic.react';
 
 // Import the CSS file, which HtmlWebpackPlugin transfers to the build folder
 import '../css/main.css';
@@ -70,13 +65,7 @@ if (module.hot) {
 // which are all wrapped in the App component, which contains the navigation etc
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={createHistory()}>
-      <Route component={App}>
-        <Route path="/" component={HomePage} />
-        <Route path="/readme" component={ReadmePage} />
-        <Route path="*" component={NotFoundPage} />
-      </Route>
-    </Router>
+    <CitiesGraphic />
   </Provider>,
-  document.getElementById('app')
+  document.getElementById('cities-graphic')
 );

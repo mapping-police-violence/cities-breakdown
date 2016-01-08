@@ -1,21 +1,19 @@
 /**
  *
- * App.react.js
+ * CitiesGraphic
  *
- * This component is the skeleton around the actual pages, and should only
- * contain code that should be seen on all pages. (e.g. navigation bar)
+ * This is the top-level component for the entire graphic.
  */
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Logo from '../../img/logo.png';
+import FilterPanel from './FilterPanel';
 
-class App extends Component {
+class CitiesGraphic extends Component {
   render() {
     return (
       <div className="wrapper">
-        <img className="logo" src={Logo} />
-        { this.props.children }
+        <FilterPanel />
       </div>
     );
   }
@@ -31,4 +29,4 @@ function select(state) {
 }
 
 // Wrap the component to inject dispatch and state into it
-export default connect(select)(App);
+export default connect(select)(CitiesGraphic);

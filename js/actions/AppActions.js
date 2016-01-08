@@ -25,32 +25,38 @@
 
 // Disable the no-use-before-define eslint rule for this file
 // It makes more sense to have the asnyc actions before the non-async ones
-/* eslint-disable no-use-before-define */
 
-import { CHANGE_OWNER_NAME, CHANGE_PROJECT_NAME } from '../constants/AppConstants';
+import {
+  CHANGE_CITY_PREFIX,
+  CHANGE_CRIME_RATE,
+  CHANGE_MURDER_RATE,
+  CHANGE_POPULATION,
+  CHANGE_STATE,
+  TOGGLE_RACE,
+} from '../constants/AppConstants';
 
-export function asyncChangeProjectName(name) {
-  return (dispatch) => {
-    // You can do async stuff here!
-    // API fetching, Animations,...
-    // For more information as to how and why you would do this, check https://github.com/gaearon/redux-thunk
-    return dispatch(changeProjectName(name));
-  };
+export function changeState(state) {
+  return { type: CHANGE_STATE, state };
 }
 
-export function asyncChangeOwnerName(name) {
-  return (dispatch) => {
-    // You can do async stuff here!
-    // API fetching, Animations,...
-    // For more information as to how and why you would do this, check https://github.com/gaearon/redux-thunk
-    return dispatch(changeOwnerName(name));
-  };
+export function changeCityPrefix(city) {
+  return { type: CHANGE_CITY_PREFIX, city };
 }
 
-export function changeProjectName(name) {
-  return { type: CHANGE_PROJECT_NAME, name };
+export function changeCrimeRate(crimeRate) {
+  return { type: CHANGE_CRIME_RATE, crimeRate };
 }
 
-export function changeOwnerName(name) {
-  return { type: CHANGE_OWNER_NAME, name };
+export function changeMurderRate(murderRate) {
+  return { type: CHANGE_MURDER_RATE, murderRate };
 }
+
+export function changePopulation(population) {
+  return { type: CHANGE_POPULATION, population };
+}
+
+export function toggleRace(race) {
+  return { type: TOGGLE_RACE, race };
+}
+
+

@@ -1,32 +1,92 @@
 import expect from 'expect';
-import { changeOwnerName, changeProjectName } from '../js/actions/AppActions';
-import { CHANGE_OWNER_NAME, CHANGE_PROJECT_NAME } from '../js/constants/AppConstants';
+import {
+  changeState,
+  changeCityPrefix,
+  changeCrimeRate,
+  changeMurderRate,
+  changePopulation,
+  toggleRace,
+} from '../js/actions/AppActions';
+import {
+  CHANGE_CITY_PREFIX,
+  CHANGE_CRIME_RATE,
+  CHANGE_MURDER_RATE,
+  CHANGE_POPULATION,
+  CHANGE_STATE,
+  TOGGLE_RACE,
+} from '../js/constants/AppConstants';
 
-// Test actions from AppActions.js
 describe('AppActions', () => {
-  // Test changeOwnerName action
-  describe('changeOwnerName', () => {
-    it('should change the owner name', () => {
-      const name = 'samsmith';
+
+  describe('changeState', () => {
+    it('should change the state', () => {
+      const state = 'California';
       const expectedResult = {
-        type: CHANGE_OWNER_NAME,
-        name
+        type: CHANGE_STATE,
+        state
       };
 
-      expect(changeOwnerName(name)).toEqual(expectedResult);
+      expect(changeState(state)).toEqual(expectedResult);
     });
   });
 
-  // Test changeProjectName action
-  describe('changeProjectName', () => {
-    it('should change the project name', () => {
-      const name = 'Webapplication Boilerplate';
+  describe('changeCityPrefix', () => {
+    it('should change the city name', () => {
+      const city = 'San Fran';
       const expectedResult = {
-        type: CHANGE_PROJECT_NAME,
-        name
+        type: CHANGE_CITY_PREFIX,
+        city
       };
 
-      expect(changeProjectName(name)).toEqual(expectedResult);
+      expect(changeCityPrefix(city)).toEqual(expectedResult);
+    });
+  });
+
+  describe('changeCrimeRate', () => {
+    it('should change the crime rate', () => {
+      const crimeRate = [0, 100];
+      const expectedResult = {
+        type: CHANGE_CRIME_RATE,
+        crimeRate
+      };
+
+      expect(changeCrimeRate(crimeRate)).toEqual(expectedResult);
+    });
+  });
+
+  describe('changeMurderRate', () => {
+    it('should change the crime rate', () => {
+      const murderRate = [0, 100];
+      const expectedResult = {
+        type: CHANGE_MURDER_RATE,
+        murderRate
+      };
+
+      expect(changeMurderRate(murderRate)).toEqual(expectedResult);
+    });
+  });
+
+  describe('changePopulation', () => {
+    it('should change the population', () => {
+      const population = [0, 100000];
+      const expectedResult = {
+        type: CHANGE_POPULATION,
+        population
+      };
+
+      expect(changePopulation(population)).toEqual(expectedResult);
+    });
+  });
+
+  describe('toggleRace', () => {
+    it('should toggle the race', () => {
+      const race = 'white';
+      const expectedResult = {
+        type: TOGGLE_RACE,
+        race
+      };
+
+      expect(toggleRace(race)).toEqual(expectedResult);
     });
   });
 });
