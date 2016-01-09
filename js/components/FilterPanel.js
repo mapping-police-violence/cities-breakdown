@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import FilterPanelControl from './FilterPanelControl';
 import Slider from './Slider';

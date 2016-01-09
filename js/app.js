@@ -24,6 +24,7 @@ if ('serviceWorker' in navigator) {
 }
 
 // Import all the third party stuff
+import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
@@ -53,7 +54,7 @@ import rootReducer from './reducers/rootReducer';
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(rootReducer);
 
-/* eslint-disable */
+/* eslint-disable max-len, global-require */
 // Make reducers hot reloadable, see
 // http://stackoverflow.com/questions/34243684/make-redux-reducers-and-other-non-components-hot-loadable
 if (module.hot) {
@@ -63,6 +64,7 @@ if (module.hot) {
     store.replaceReducer(nextRootReducer);
   });
 }
+
 /* eslint-enable */
 
 // Mostly boilerplate, except for the Routes. These are the pages you can go to,

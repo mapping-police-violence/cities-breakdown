@@ -5,7 +5,7 @@
  * This is the top-level component for the entire graphic.
  */
 
-import {Component} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import FilterPanel from './FilterPanel';
 
