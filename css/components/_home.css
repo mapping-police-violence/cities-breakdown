@@ -18,3 +18,58 @@
   display: table;
   clear: both;
 }
+
+.filter-panel-control {
+  display: inline-block;
+  max-width: 20%;
+  padding: 0px 5px;
+  vertical-align: top;
+  margin-bottom: 20px;
+}
+
+.filter-panel-control select {
+  width: 100%;
+}
+
+.filter-panel-control input {
+  width: 100%;
+}
+
+.filter-panel-control .label {
+  min-height: 40px
+}
+
+.slider-container {
+  padding: 0 5px;
+}
+
+.slider-label {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #777;
+}
+
+h4.label {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .filter-panel-control {
+    display: inline-block;
+    max-width: 50%;
+    width: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-panel-control {
+    display: inline-block;
+    max-width: 100%;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .filter-panel-control .label {
+    min-height: initial;
+  }
+}
