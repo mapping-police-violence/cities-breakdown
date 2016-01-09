@@ -21,40 +21,39 @@ describe('filterReducer', () => {
     testReducer(undefined, {}, initialState);
   });
 
-
   it('should handle the CHANGE_STATE action', () => {
     testReducer(initialState, {
       type: constants.CHANGE_STATE,
-      state: 'California'
-    }, assign(initialState, { state: 'california' }));
+      state: 'California',
+    }, assign(initialState, {state: 'california'}));
   });
 
   it('should handle the CHANGE_CITY_PREFIX action', () => {
     testReducer(initialState, {
       type: constants.CHANGE_CITY_PREFIX,
       city: 'San'
-    }, assign(initialState, { city: 'san' }));
+    }, assign(initialState, {city: 'san'}));
   });
 
   it('should handle the CHANGE_CRIME_RATE action', () => {
     testReducer(initialState, {
       type: constants.CHANGE_CRIME_RATE,
       crimeRate: [0, 10.00]
-    }, assign(initialState, { crimeRate: [0, 10] }));
+    }, assign(initialState, {crimeRate: [0, 10]}));
   });
 
   it('should handle the CHANGE_MURDER_RATE action', () => {
     testReducer(initialState, {
       type: constants.CHANGE_MURDER_RATE,
       murderRate: [0, 11.00]
-    }, assign(initialState, { murderRate: [0, 11] }));
+    }, assign(initialState, {murderRate: [0, 11]}));
   });
 
   it('should handle the CHANGE_POPULATION action', () => {
     testReducer(initialState, {
       type: constants.CHANGE_POPULATION,
       population: [0, 987654321]
-    }, assign(initialState, { population: [0, 987654321] }));
+    }, assign(initialState, {population: [0, 987654321]}));
   });
 
   it('should handle the TOGGLE_RACE action', () => {
@@ -62,10 +61,10 @@ describe('filterReducer', () => {
       type: constants.TOGGLE_RACE,
       race: 'black'
     }, assign(initialState, {
-      race: constants.ALL_RACES.filter((r) => r != 'black')
+      race: constants.ALL_RACES.filter((race) => race !== 'black'),
     }));
 
-    testReducer(assign(initialState, { race: [] }), {
+    testReducer(assign(initialState, {race: []}), {
       type: constants.TOGGLE_RACE,
       race: 'black'
     }, assign(initialState, {
@@ -74,14 +73,20 @@ describe('filterReducer', () => {
   });
 
   it('should handle the LOAD_DATA_SUCCESS action', () => {
-    // TODO: write this test when data format is solidified
-    // The reducer should handle this by finding the max and min of the relevant
-    // filters and updating the default state.
+  // TODO: write this test when data format is solidified
+  // The reducer should handle this by finding the max and min of the relevant
+  // filters and updating the default state.
   });
 });
 
-
-const testReducer = (before, action, after) => {
+/**
+ * Test a reducer on the given before/action/after triplet.
+ *
+ * @param  {Object} before The state before
+ * @param  {Object} action The action to be performed
+ * @param  {Object} after The state after
+ */
+function testReducer(before, action, after) {
   Object.freeze(before);
   expect(filterReducer(before, action)).toEqual(after);
-};
+}

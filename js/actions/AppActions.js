@@ -36,27 +36,25 @@ import {
 } from '../constants/AppConstants';
 
 export function changeState(state) {
-  return { type: CHANGE_STATE, state };
+  return {type: CHANGE_STATE, state};
 }
 
 export function changeCityPrefix(city) {
-  return { type: CHANGE_CITY_PREFIX, city };
+  return {type: CHANGE_CITY_PREFIX, city};
 }
 
 export function changeCrimeRate(crimeRate) {
-  return { type: CHANGE_CRIME_RATE, crimeRate };
+  return {type: CHANGE_CRIME_RATE, crimeRate};
 }
 
 export function changeMurderRate(murderRate) {
-  return { type: CHANGE_MURDER_RATE, murderRate };
+  return {type: CHANGE_MURDER_RATE, murderRate};
 }
 
 export function changePopulation(population) {
-  return { type: CHANGE_POPULATION, population };
+  return {type: CHANGE_POPULATION, population};
 }
 
 export function toggleRace(race) {
-  return { type: TOGGLE_RACE, race };
+  return {type: TOGGLE_RACE, race};
 }
-
-

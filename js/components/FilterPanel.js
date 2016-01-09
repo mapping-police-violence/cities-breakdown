@@ -1,17 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import {Component} from 'react';
+import {connect} from 'react-redux';
 import FilterPanelControl from './FilterPanelControl';
 import Slider from './Slider';
 import {
-  changeState,
-  changeCityPrefix,
   changeCrimeRate,
   changeMurderRate,
   changePopulation,
-  toggleRace,
 } from '../actions/AppActions';
-
-let onChangeAction = (value) => console.log(value)
 
 class FilterPanel extends Component {
   render() {

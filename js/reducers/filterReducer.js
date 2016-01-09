@@ -20,7 +20,6 @@ import {
   CHANGE_MURDER_RATE,
   CHANGE_POPULATION,
   CHANGE_STATE,
-  LOAD_DATA_SUCCESS,
   TOGGLE_RACE,
 } from '../constants/AppConstants';
 import assign from '../utils/assign';
@@ -39,47 +38,48 @@ const initialState = {
 
 function filterReducer(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_CITY_PREFIX:
-      return assign(state, { city: action.city.toLowerCase() });
+  case CHANGE_CITY_PREFIX:
+    return assign(state, {city: action.city.toLowerCase()});
 
-    case CHANGE_CRIME_RATE:
-      return assign(state, {
-        crimeRate: action.crimeRate
-      });
+  case CHANGE_CRIME_RATE:
+    return assign(state, {
+      crimeRate: action.crimeRate
+    });
 
-    case CHANGE_MURDER_RATE:
-      return assign(state, {
-        murderRate: action.murderRate
-      });
+  case CHANGE_MURDER_RATE:
+    return assign(state, {
+      murderRate: action.murderRate
+    });
 
-    case CHANGE_POPULATION:
-      return assign(state, {
-        population: action.population,
-      });
+  case CHANGE_POPULATION:
+    return assign(state, {
+      population: action.population,
+    });
 
-    case CHANGE_STATE:
-      return assign(state, {
-        state: action.state.toLowerCase()
-      });
+  case CHANGE_STATE:
+    return assign(state, {
+      state: action.state.toLowerCase()
+    });
 
-    case TOGGLE_RACE:
-      let toggleIndex = state.race.indexOf(action.race);
-      let updatedRace;
-      if (toggleIndex === -1) {
-        updatedRace = [
-          ...state.race,
-          action.race
-        ];
-      } else {
-        updatedRace = [
-          ...state.race.slice(0, toggleIndex),
-          ...state.race.slice(toggleIndex + 1)
-        ];
-      }
-      return assign(state, { race: updatedRace });
+  case TOGGLE_RACE:
+    let toggleIndex = state.race.indexOf(action.race);
+    let updatedRace;
 
-    default:
-      return state;
+    if (toggleIndex === -1) {
+      updatedRace = [
+        ...state.race,
+        action.race
+      ];
+    } else {
+      updatedRace = [
+        ...state.race.slice(0, toggleIndex),
+        ...state.race.slice(toggleIndex + 1)
+      ];
+    }
+    return assign(state, {race: updatedRace});
+
+  default:
+    return state;
   }
 }
 

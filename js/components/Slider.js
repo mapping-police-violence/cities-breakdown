@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import RcSlider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-const tipFormatter = function(value) {
+function tipFormatter(value) {
   return value.toLocaleString();
 }
 
@@ -28,13 +28,12 @@ const CustomizedRange = React.createClass({
   },
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+function mapDispatchToProps(dispatch, ownProps) {
   return {
     onChange: (value) => {
-      dispatch(ownProps.onChange(value))
+      dispatch(ownProps.onChange(value));
     }
-  }
+  };
 }
 
 export default connect(null, mapDispatchToProps)(CustomizedRange);
-

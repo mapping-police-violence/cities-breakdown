@@ -5,8 +5,8 @@
  * This is the top-level component for the entire graphic.
  */
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import {Component} from 'react';
+import {connect} from 'react-redux';
 import FilterPanel from './FilterPanel';
 
 class CitiesGraphic extends Component {

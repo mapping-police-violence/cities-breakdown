@@ -8,7 +8,7 @@ import dataReducer from './dataReducer';
 import networkReducer from './networkReducer';
 
 // Replace line below once you have several reducers with
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 const rootReducer = combineReducers({
   filter: filterReducer,
   data: dataReducer,

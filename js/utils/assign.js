@@ -1,7 +1,9 @@
-const assign = Object.assign || require('object.assign'); // Polyfill maybe needed for browser support
+// Polyfill maybe needed for browser
+import objectAssign from 'object.assign';
+const assign = Object.assign || objectAssign;
 
-const assignToEmpty = (oldObject, newObject) => {
+function assignToEmpty(oldObject, newObject) {
   return assign({}, oldObject, newObject);
-};
+}
 
 export default assignToEmpty;
