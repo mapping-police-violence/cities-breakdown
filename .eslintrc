@@ -145,13 +145,9 @@
         }],
         "comma-style": [2, "last"],                         // Enforce commas at the end of a line
         "computed-property-spacing": [2, "never"],          // Disallow spaces inside of computed properties
-        "consistent-this": [2, "that"],                     // Enforce capturing the current execution context using the that variable (e.g var that = this;) - consider changing to self
+        "consistent-this": [2, "self"],                     // Enforce capturing the current execution context using the that variable (e.g var that = this;) - consider changing to self
         "eol-last": 2,                                      // Enforce trailing space at the end of every non-empty file
-        "func-names": 2,                                    // Enforce naming of optionally named functions (that could remain anonymous). This helps with debugging, but open to turning this off
         // "func-style": [2, "declaration"],                    // Need to discuss with team
-        "id-length": [2, {                                  // Enforce a mininmum id length of 2 characters, except i for iterating over loops
-            "exceptions": ["i", "_"]
-        }],
         "indent": [2, 2],                               // Enforce tabs equivalent to two spaces
         "jsx-quotes": [2, "prefer-double"],                 // Enforce double quotes for JSX attribute values unless a set of single quotes contains a double quote
         "key-spacing": [2, {                                // Enforce one space after key in object
@@ -159,11 +155,6 @@
             "afterColon": true
         }],
         "linebreak-style": [2, "unix"],                     // Enforce unix-style line endings
-        "lines-around-comment": [2, {                       // Enforce spaces before comment blocks and allow comments at the beginning of array and object declarations
-            "beforeBlockComment": true,
-            "allowObjectStart": true,
-            "allowArrayStart": true
-        }],
         // "max-depth": [2, 5],                             // Enforces maximum nesting level, need to check with team if we want to enforce this
         "max-len": [2, 100, 2],                             // Enforce a maximum line length of 100 characters, while treating tabs as 2 characters
         "max-nested-callbacks": 2,                          // Enforce a maximum of 10 levels of nested callbacks
@@ -171,7 +162,6 @@
         // "max-statements": [2, 10],                       // Enforce a maximum of 10 statements in any given function. Need to discuss with team
         "new-cap": 2,                                       // Require a capital letter to instantiate a constructor
         "new-parens": 2,                                    // Require parentheses when instantiating a constructor
-        "newline-after-var": 2,                             // Require a blank line after variable definitions
         "no-array-constructor": 2,                          // Disallow using the Array constructor to create arrays
         "no-bitwise": 2,                                    // Disallow bitwise opearators (e.g. var x = y & z)
         "no-continue": 2,                                   // Disallow the use of continue statements
@@ -181,7 +171,6 @@
             "max": 2,
             "maxEOF": 1
         }],
-        "no-negated-condition": 2,                          // Disallow using negated conditions when the else branch is not empty
         "no-nested-ternary": 2,                             // Disallow nested ternary expressions
         "no-new-object": 2,                                 // Disallow using the new Object constructor in favor of the object literal syntax var myObject = {};
         "no-plusplus": [2, {                                // Disallow the use of unary operators, ++ and -- unless they are used as iterators for a for loop
@@ -193,7 +182,6 @@
         "no-unneeded-ternary": [2, {                        // Disallow use of ternary assignment for variables
             "defaultAssignment": false
         }],
-        "object-curly-spacing": [2, "never"],               // Disallow extra spaces inside objects
         //"one-var": [2, {                                  // Require all constants to be declared at the top of the function scope. Need to discuss with team
         //  "var: "always",
         //  "let": "always",

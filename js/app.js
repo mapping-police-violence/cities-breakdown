@@ -8,9 +8,22 @@
  */
 
 // Load the ServiceWorker, the Cache polyfill, the manifest.json file and the .htaccess file
-import 'file?name=[name].[ext]!../serviceworker.js';
-import 'file?name=[name].[ext]!../manifest.json';
+
 import 'file?name=[name].[ext]!../.htaccess';
+import 'file?name=[name].[ext]!../manifest.json';
+import 'file?name=[name].[ext]!../serviceworker.js';
+
+import '../css/main.css';
+
+import thunk from 'redux-thunk';
+import FontFaceObserver from 'fontfaceobserver';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+
+import rootReducer from './reducers/rootReducer';
+import CitiesGraphic from './components/CitiesGraphic.react';
 
 // Check for ServiceWorker support before trying to install it
 if ('serviceWorker' in navigator) {
@@ -24,12 +37,6 @@ if ('serviceWorker' in navigator) {
 }
 
 // Import all the third party stuff
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
-import FontFaceObserver from 'fontfaceobserver';
 
 // Observer loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
@@ -43,15 +50,14 @@ openSansObserver.check().then(() => {
 });
 
 // Import the pages
-import CitiesGraphic from './components/CitiesGraphic.react';
 
 // Import the CSS file, which HtmlWebpackPlugin transfers to the build folder
-import '../css/main.css';
 
 // Create the store with the redux-thunk middleware, which allows us
 // to do asynchronous things in the actions
-import rootReducer from './reducers/rootReducer';
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+const createStoreWithMiddleware =
+    applyMiddleware(thunk)(
+      (window.devToolsExtension ? window.devToolsExtension() : (f) => f)(createStore));
 const store = createStoreWithMiddleware(rootReducer);
 
 /* eslint-disable max-len, global-require */

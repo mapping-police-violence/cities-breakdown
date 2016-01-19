@@ -26,6 +26,8 @@
 // Disable the no-use-before-define eslint rule for this file
 // It makes more sense to have the asnyc actions before the non-async ones
 
+import d3 from 'd3';
+
 import {
   CHANGE_CITY_PREFIX,
   CHANGE_CRIME_RATE,
@@ -33,6 +35,9 @@ import {
   CHANGE_POPULATION,
   CHANGE_STATE,
   TOGGLE_RACE,
+  LOAD_DATA,
+  LOAD_DATA_ERROR,
+  LOAD_DATA_SUCCESS,
 } from '../constants/AppConstants';
 
 export function changeState(state) {
@@ -57,4 +62,32 @@ export function changePopulation(population) {
 
 export function toggleRace(race) {
   return {type: TOGGLE_RACE, race};
+}
+
+export function loadData() {
+  return {type: LOAD_DATA};
+}
+
+export function loadDataSuccess(data) {
+  return {type: LOAD_DATA_SUCCESS, data};
+}
+
+export function loadDataError(error) {
+  return {type: LOAD_DATA_ERROR, error};
+}
+
+export function fetchData() {
+  return (dispatch) => {
+    dispatch(loadData());
+
+    d3.csv('/data/data.csv', (data) => {
+      console.log('callback called');
+      if (!data) {
+        dispatch(loadDataError('Data failed to load'));
+        return;
+      }
+
+      dispatch(loadDataSuccess(data));
+    });
+  };
 }
