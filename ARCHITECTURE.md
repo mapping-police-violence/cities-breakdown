@@ -73,7 +73,7 @@ I will need the following data to complete this (per city):
 - Name of city
 - State
 - Population
-- Black population
+- Population by race
 - Number of victims of police homicide (for each of black, white, hispanic, asian/pacific islander)
 - Murder rate
 - Violent crime rate
