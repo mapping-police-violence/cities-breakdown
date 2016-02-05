@@ -38,6 +38,7 @@ import {
   LOAD_DATA,
   LOAD_DATA_ERROR,
   LOAD_DATA_SUCCESS,
+  LOAD_CITIES_SUCCESS,
 } from '../constants/AppConstants';
 
 export function changeState(state) {
@@ -72,6 +73,10 @@ export function loadDataSuccess(data) {
   return {type: LOAD_DATA_SUCCESS, data};
 }
 
+export function loadCitiesSuccess(data) {
+  return {type: LOAD_CITIES_SUCCESS, data};
+}
+
 export function loadDataError(error) {
   return {type: LOAD_DATA_ERROR, error};
 }
@@ -80,14 +85,22 @@ export function fetchData() {
   return (dispatch) => {
     dispatch(loadData());
 
-    d3.csv('/data/data.csv', (data) => {
-      console.log('callback called');
+    d3.csv('/data/filtered.csv', (data) => {
       if (!data) {
         dispatch(loadDataError('Data failed to load'));
         return;
       }
 
       dispatch(loadDataSuccess(data));
+    });
+
+    d3.csv('/data/selectedcities.csv', (data) => {
+      if (!data) {
+        dispatch(loadDataError('Cities failed to load'));
+        return;
+      }
+
+      dispatch(loadCitiesSuccess(data));
     });
   };
 }

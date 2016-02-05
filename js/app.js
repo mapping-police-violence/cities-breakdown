@@ -7,16 +7,9 @@
  *
  */
 
-// Load the ServiceWorker, the Cache polyfill, the manifest.json file and the .htaccess file
-
-import 'file?name=[name].[ext]!../.htaccess';
-import 'file?name=[name].[ext]!../manifest.json';
-import 'file?name=[name].[ext]!../serviceworker.js';
-
 import '../css/main.css';
 
 import thunk from 'redux-thunk';
-import FontFaceObserver from 'fontfaceobserver';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
@@ -25,29 +18,7 @@ import {createStore, applyMiddleware} from 'redux';
 import rootReducer from './reducers/rootReducer';
 import CitiesGraphic from './components/CitiesGraphic.react';
 
-// Check for ServiceWorker support before trying to install it
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/serviceworker.js').then(() => {
-    // Registration was successful
-  }).catch(() => {
-    // Registration failed
-  });
-} else {
-  // No ServiceWorker Support
-}
-
 // Import all the third party stuff
-
-// Observer loading of Open Sans (to remove open sans, remove the <link> tag in
-// the index.html file and this observer)
-const openSansObserver = new FontFaceObserver('Open Sans', {});
-
-// When Open Sans is loaded, add the js-open-sans-loaded class to the body
-openSansObserver.check().then(() => {
-  document.body.classList.add('js-open-sans-loaded');
-}, () => {
-  document.body.classList.remove('js-open-sans-loaded');
-});
 
 // Import the pages
 
