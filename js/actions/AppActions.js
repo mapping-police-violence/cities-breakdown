@@ -100,7 +100,17 @@ export function fetchData() {
         return;
       }
 
-      dispatch(loadCitiesSuccess(data));
+      // Do some parsing
+      const COMMAS = /,/g;
+      /* eslint-disable camelcase */
+      const parsedData = data.map((city) => Object.assign(city, {
+        violent_crime_rate: Number(city.violent_crime_rate),
+        murder_rate: Number(city.murder_rate),
+        total: Number(city.total.replace(COMMAS, ''))
+      }));
+      /* eslint-enable */
+
+      dispatch(loadCitiesSuccess(parsedData));
     });
   };
 }

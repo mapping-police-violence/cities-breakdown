@@ -21,8 +21,10 @@ import {
   CHANGE_POPULATION,
   CHANGE_STATE,
   TOGGLE_RACE,
+  LOAD_CITIES_SUCCESS
 } from '../constants/AppConstants';
 import assign from '../utils/assign';
+import { max } from 'd3';
 
 const initialState = {
   city: null,
@@ -39,7 +41,7 @@ const initialState = {
 function filterReducer(state = initialState, action) {
   switch (action.type) {
   case CHANGE_CITY_PREFIX:
-    return assign(state, {city: action.city.toLowerCase()});
+    return assign(state, {city: action.city.toLowerCase().trim()});
 
   case CHANGE_CRIME_RATE:
     return assign(state, {
@@ -77,6 +79,21 @@ function filterReducer(state = initialState, action) {
       ];
     }
     return assign(state, {race: updatedRace});
+
+  case LOAD_CITIES_SUCCESS:
+    const maxPossiblePopulation =
+        max(action.data.map((city) => city.total));
+    const maxPossibleCrimeRate = max(action.data.map((city) => city.violent_crime_rate));
+    const maxPossibleMurderRate = max(action.data.map((city) => city.murder_rate));
+
+    return assign(state, {
+      maxPossibleCrimeRate,
+      maxPossiblePopulation,
+      maxPossibleMurderRate,
+      population: [state.population[0], Math.min(state.population[1], maxPossiblePopulation)],
+      crimeRate: [state.crimeRate[0], Math.min(state.crimeRate[1], maxPossibleCrimeRate)],
+      murderRate: [state.murderRate[0], Math.min(state.murderRate[1], maxPossibleMurderRate)],
+    });
 
   default:
     return state;

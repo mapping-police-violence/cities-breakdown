@@ -39,24 +39,6 @@ class FilterPanel extends Component {
             onAfterChange={this.props.onPopulationChange}
             max={this.props.maxPossiblePopulation} />
         </FilterPanelControl>
-        <table>
-          <tbody>
-            <tr>
-              <th> Crime Rate </th>
-              <th> Murder Rate </th>
-              <th> Population </th>
-              <th> State </th>
-              <th> City </th>
-            </tr>
-            <tr>
-              <td>{this.props.crimeRate[0] + ' - ' + this.props.crimeRate[1]}</td>
-              <td>{this.props.murderRate[0] + ' - ' + this.props.murderRate[1]}</td>
-              <td>{this.props.population[0] + ' - ' + this.props.population[1]}</td>
-              <td>{this.props.state}</td>
-              <td>{this.props.city}</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     );
   }
