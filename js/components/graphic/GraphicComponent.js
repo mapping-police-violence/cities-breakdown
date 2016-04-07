@@ -1,28 +1,81 @@
 import ReactDOM from 'react-dom';
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import groupBy from 'lodash.groupby';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import Graphic from './graphic';
+import TotalsGraphic from './graphic';
+import UnarmedGraphic from './unarmedgraphic';
+import RateGraphic from './rategraphic';
+import { selectTab } from '../../actions/AppActions';
+
 
 class GraphicComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.graphicMap = {
+      0: {
+        Class: RateGraphic,
+      },
+      1: {
+        Class: TotalsGraphic,
+      },
+      2: {
+        Class: UnarmedGraphic,
+      }
+    };
+  }
+
   componentDidMount() {
-    let el = ReactDOM.findDOMNode(this);
-    this.graphic = new Graphic(el, filterData(this.props.data, this.props.filter).murders);
+    const data = filterData(this.props.data, this.props.filter);
+    this.getSelectedTabInstance().update(data);
   }
 
   componentDidUpdate() {
-    this.graphic.update(filterData(this.props.data, this.props.filter).murders);
-  }
-
-  render() {
-    return (
-      <div className="graphic-container"></div>
-    );
+    const data = filterData(this.props.data, this.props.filter);
+    this.getSelectedTabInstance().update(data);
   }
 
   componentWillUnmount() {
     this.graphic.destroy();
+  }
+
+  render() {
+    const { filter: { selectedTab } } = this.props;
+    return (
+      <Tabs onSelect={this.tabSelected.bind(this)}
+          selectedIndex={selectedTab}
+          forceRenderTabPanel={true}>
+        <TabList>
+          <Tab>Police Homicide Rate</Tab>
+          <Tab>Total Police Homicides</Tab>
+          <Tab>Unarmed Victims</Tab>
+        </TabList>
+        <TabPanel>
+          <div className={'homicide-rate'} ref={(div) => this.graphicMap[0].el = div} />
+        </TabPanel>
+        <TabPanel>
+          <div className={'homicide-totals'} ref={(div) => this.graphicMap[1].el = div} />
+        </TabPanel>
+        <TabPanel>
+          <div className={'unarmed'} ref={(div) => this.graphicMap[2].el = div} />
+        </TabPanel>
+      </Tabs>
+    );
+  }
+
+  tabSelected(tab) {
+    this.props.dispatch(selectTab(tab));
+  }
+
+
+  getSelectedTabInstance() {
+    const { filter: { selectedTab } } = this.props;
+    if (!this.graphicMap[selectedTab].instance) {
+      this.graphicMap[selectedTab].instance = new this.graphicMap[selectedTab].Class(
+          this.graphicMap[selectedTab].el);
+    }
+    return this.graphicMap[selectedTab].instance;
   }
 }
 
@@ -61,16 +114,22 @@ function filterMurders(cities) {
 
 function filterData(data, filter) {
   if (!data.cities || !data.murders) {
-    return {};
+    return [];
   }
 
   let cities = data.cities.filter(filterCities(filter));
   let murders = data.murders.filter(filterMurders(cities));
   murders = groupBy(murders, 'agency_responsible');
-  return {
-    cities,
-    murders
-  };
+  cities = cities.map((city) => {
+    return {
+      city,
+      murders: murders[city.police_department]
+    };
+  });
+
+  console.log(cities);
+
+  return cities;
 }
 
 function select(state) {

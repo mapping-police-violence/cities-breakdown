@@ -21,6 +21,7 @@ import {
   CHANGE_POPULATION,
   CHANGE_STATE,
   TOGGLE_RACE,
+  SELECT_TAB,
   LOAD_CITIES_SUCCESS
 } from '../constants/AppConstants';
 import assign from '../utils/assign';
@@ -36,6 +37,7 @@ const initialState = {
   population: [0, 10000000],
   race: ALL_RACES,
   state: null,
+  selectedTab: 0
 };
 
 function filterReducer(state = initialState, action) {
@@ -79,6 +81,9 @@ function filterReducer(state = initialState, action) {
       ];
     }
     return assign(state, {race: updatedRace});
+
+  case SELECT_TAB:
+    return assign(state, { selectedTab: action.tab });
 
   case LOAD_CITIES_SUCCESS:
     const maxPossiblePopulation =

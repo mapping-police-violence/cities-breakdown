@@ -5,6 +5,7 @@
   "dependencies": {
     "d3": "^3.5.12",
     "history": "1.17.0",
+    "lodash.countby": "^4.0.3",
     "lodash.groupby": "^4.0.2",
     "rc-slider": "^3.3.1",
     "react": "^0.14.2",

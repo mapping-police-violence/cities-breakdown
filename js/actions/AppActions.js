@@ -39,6 +39,7 @@ import {
   LOAD_DATA_ERROR,
   LOAD_DATA_SUCCESS,
   LOAD_CITIES_SUCCESS,
+  SELECT_TAB
 } from '../constants/AppConstants';
 
 export function changeState(state) {
@@ -63,6 +64,10 @@ export function changePopulation(population) {
 
 export function toggleRace(race) {
   return {type: TOGGLE_RACE, race};
+}
+
+export function selectTab(tab) {
+  return {type: SELECT_TAB, tab};
 }
 
 export function loadData() {
@@ -106,7 +111,9 @@ export function fetchData() {
       const parsedData = data.map((city) => Object.assign(city, {
         violent_crime_rate: Number(city.violent_crime_rate),
         murder_rate: Number(city.murder_rate),
-        total: Number(city.total.replace(COMMAS, ''))
+        total: Number(city.total.replace(COMMAS, '')),
+        black: Number(city.black.replace(COMMAS, '')),
+        white: Number(city.white.replace(COMMAS, ''))
       }));
       /* eslint-enable */
 
