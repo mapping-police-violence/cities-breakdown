@@ -19,6 +19,10 @@
   clear: both;
 }
 
+.filter-panel {
+  margin-bottom: 10px;
+}
+
 .filter-panel-control {
   display: inline-block;
   max-width: 20%;
@@ -91,4 +95,40 @@ h4.label {
 	fill: none;
 	stroke: #ddd;
 	shape-rendering: crisp-edges;
+}
+
+.ReactTabs__Tab {
+  max-width: 30%;
+}
+
+.legend p {
+  font-style: italic;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.color-swatches {
+  text-align: right;
+}
+
+.legend-label {
+  display: inline-block;
+  padding: 10px 5px;
+}
+
+.label-text {
+  font-size: 14px;
+  color: #777;
+  font-style: normal;
+  vertical-align: top;
+  line-height: 20px;
+}
+
+.swatch {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
 }

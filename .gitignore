@@ -5,3 +5,4 @@ js/bundle.min.js
 build
 npm-debug.log
 .ipynb_checkpoints
+.tags*

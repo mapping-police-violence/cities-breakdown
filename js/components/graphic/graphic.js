@@ -5,12 +5,19 @@ import { ALL_RACES } from '../../constants/AppConstants';
 
 class Graphic {
   constructor(el, data) {
-    console.log(el);
     this.el = el;
     this.width = this.el.clientWidth;
     this.height = this.el.clientHeight;
     this.margin = this._getMargin();
     this.innerWidth = this.width - this.margin.left - this.margin.right;
+
+    this.legend = d3.select(this.el).append('div')
+      .attr('class', 'legend');
+    this.legend.append('p')
+      .text(this._getLegendText());
+
+    this.legend.append('div')
+      .attr('class', 'color-swatches');
 
     this.svg = d3.select(this.el).append('svg')
       .attr('class', 'd3-graphic')
@@ -45,6 +52,8 @@ class Graphic {
     let x = this._getXAxis();
     let y = this._getYAxis();
     this._updateAxes(x, y);
+
+    this._updateLegend();
 
     let policeDepartments = this.group.selectAll('.pd').data(this.data);
     policeDepartments.enter()
@@ -117,14 +126,18 @@ class Graphic {
   _getYAxis() {
     return d3.scale.ordinal()
       .domain(this.data.map((d) => d.label))
-      .rangeRoundBands([0, this.innerHeight], 0.1, 0.05);
+      .rangeBands([0, this.innerHeight], 0.1, 0.05);
+  }
+
+  _getLegendText() {
+    return 'The total number of police homicides in each city, broken down by race.';
   }
 
   _updateAxes(x, y) {
     let xAxis = d3.svg.axis()
       .scale(x)
       .orient('top')
-      .tickFormat(d3.format('.2s'));
+      .tickFormat(d3.format('.f'));
     let yAxis = d3.svg.axis()
       .scale(y)
       .orient('left');
@@ -136,6 +149,41 @@ class Graphic {
     d3.selectAll('g.y.axis')
       .attr('transform', `translate(${this.innerWidth / 3}, 0)`)
       .call(yAxis);
+  }
+
+  _getLegendLabels() {
+    const racesFound = new Set([]);
+
+    this.data.forEach((pd) => {
+      pd.data.forEach((race) => racesFound.add(race.label));
+    });
+
+    /* eslint-disable arrow-body-style */
+    return ALL_RACES.map((race) => {
+      if (!racesFound.has(race)) {
+        return false;
+      }
+
+      return {
+        label: race,
+        color: this.color(race)
+      };
+    }).filter((d) => Boolean(d));
+    /* eslint-enable */
+  }
+
+  _updateLegend() {
+    const labels = this.legend.select('.color-swatches').selectAll('.legend-label')
+      .data(this._getLegendLabels());
+    const labelContainers = labels.enter().append('div')
+      .attr('class', 'legend-label');
+    labelContainers.append('span')
+      .attr('class', 'swatch')
+      .style('background-color', (d) => d.color);
+    labelContainers.append('span')
+      .attr('class', 'label-text')
+      .text((d) => d.label);
+    labels.exit().remove();
   }
 
   _renderPoliceDepartments(policeDepartments) {

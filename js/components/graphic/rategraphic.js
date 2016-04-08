@@ -12,19 +12,19 @@ export default class RateGraphic extends Graphic {
       const nonBlackPoliceHomicides = totalPoliceHomicides - blackHomicides;
       const blackPoliceHomicideRate = blackHomicides / (datum.city.black / 10000);
       const totalPoliceHomicideRate = totalPoliceHomicides / (datum.city.total / 10000);
-      const nonBlackRate = nonBlackPoliceHomicides / (datum.city.total / 10000);
+      const nonBlackRate = nonBlackPoliceHomicides / ((datum.city.total - datum.city.black) / 10000);
       const whitePoliceHomicideRate = whitePoliceHomicides / (datum.city.white / 10000);
       const nonWhitePoliceHomicideRate =
-          totalPoliceHomicides - whitePoliceHomicides / ((datum.city.total - datum.city.white) / 10000);
+          (totalPoliceHomicides - whitePoliceHomicides) / ((datum.city.total - datum.city.white) / 10000);
       return {
         label: datum.city.police_department,
-        total: nonWhitePoliceHomicideRate,
+        total: totalPoliceHomicideRate,
         data: [{
-          rate: nonWhitePoliceHomicideRate,
-          type: 'nonwhite'
+          rate: blackPoliceHomicideRate,
+          type: 'black'
         }, {
-          rate: whitePoliceHomicideRate,
-          type: 'white'
+          rate: nonBlackRate,
+          type: 'nonblack'
         }]
       };
     }).sort((a, b) => b.total - a.total);
@@ -40,7 +40,7 @@ export default class RateGraphic extends Graphic {
       .append('rect')
       .attr('class', (d) => `rate ${d.type}`)
       .attr('height', rateHeight)
-      .attr('transform', (d) => `translate(0, ${d.type === 'nonwhite' ? rateHeight + 2 : 0})`);
+      .attr('transform', (d) => `translate(0, ${d.type === 'black' ? rateHeight + 2 : 0})`);
     rates
       .attr('width', (d) => x(d.rate))
       .attr('x', 0)
@@ -48,7 +48,25 @@ export default class RateGraphic extends Graphic {
     rates.exit().remove();
   }
 
+
   _getRowHeight() {
     return 30;
   }
+
+  _getLegendText() {
+    return 'The number of people, out of 10,000, that have been killed by the police in each city. Comparing the rate of black victims to nonblack victims. Population estimates are taken from the 2010 census.';
+  }
+
+
+  _getLegendLabels() {
+    /* eslint-disable arrow-body-style */
+    return ['Black', 'Nonblack'].map((race) => {
+      return {
+        label: race,
+        color: this.color(race.toLowerCase())
+      };
+    });
+    /* eslint-enable */
+  }
+
 }
