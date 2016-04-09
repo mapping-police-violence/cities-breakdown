@@ -99,7 +99,7 @@ export function fetchData() {
       dispatch(loadDataSuccess(data));
     });
 
-    d3.csv('/data/selectedcities.csv', (data) => {
+    d3.csv('/data/cities.csv', (data) => {
       if (!data) {
         dispatch(loadDataError('Cities failed to load'));
         return;
