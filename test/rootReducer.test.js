@@ -7,7 +7,6 @@ describe('rootReducer', () => {
     let initialState = rootReducer(undefined, {});
 
     expect(initialState.filter).toExist();
-    expect(initialState.data).toExist();
     expect(initialState.network).toEqual(null);
   });
 });

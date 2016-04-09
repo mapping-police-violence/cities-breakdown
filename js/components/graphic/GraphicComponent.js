@@ -9,6 +9,9 @@ import UnarmedGraphic from './unarmedgraphic';
 import RateGraphic from './rategraphic';
 import { selectTab } from '../../actions/AppActions';
 
+import murdersRaw from '../../../data/filtered.csv';
+import citiesRaw from '../../../data/cities.csv';
+
 
 class GraphicComponent extends Component {
   constructor(props) {
@@ -27,12 +30,12 @@ class GraphicComponent extends Component {
   }
 
   componentDidMount() {
-    const data = filterData(this.props.data, this.props.filter);
+    const data = filterData(citiesRaw, murdersRaw, this.props.filter);
     this.getSelectedTabInstance().update(data);
   }
 
   componentDidUpdate() {
-    const data = filterData(this.props.data, this.props.filter);
+    const data = filterData(citiesRaw, murdersRaw, this.props.filter);
     this.getSelectedTabInstance().update(data);
   }
 
@@ -112,13 +115,9 @@ function filterMurders(cities) {
   return (murder) => cityNames.indexOf(`${murder.city}, ${murder.state}`) !== -1;
 }
 
-function filterData(data, filter) {
-  if (!data.cities || !data.murders) {
-    return [];
-  }
-
-  let cities = data.cities.filter(filterCities(filter));
-  let murders = data.murders.filter(filterMurders(cities));
+function filterData(citiesData, murdersData, filter) {
+  let cities = citiesData.filter(filterCities(filter));
+  let murders = murdersData.filter(filterMurders(cities));
   murders = groupBy(murders, 'agency_responsible');
   cities = cities.map((city) => {
     return {
@@ -134,7 +133,6 @@ function filterData(data, filter) {
 
 function select(state) {
   return {
-    data: state.data,
     filter: state.filter
   };
 }

@@ -6,17 +6,11 @@
  */
 
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 
 import FilterPanel from './FilterPanel';
 import GraphicComponent from './graphic/GraphicComponent';
-import {fetchData} from '../actions/AppActions';
 
-class CitiesGraphic extends Component {
-  componentDidMount() {
-    this.props.dispatch(fetchData());
-  }
-
+export default class CitiesGraphic extends Component {
   render() {
     return (
       <div className="wrapper">
@@ -26,13 +20,3 @@ class CitiesGraphic extends Component {
     );
   }
 }
-
-// REDUX STUFF
-
-// Which props do we want to inject, given the global state?
-function select() {
-  return {};
-}
-
-// Wrap the component to inject dispatch and state into it
-export default connect(select)(CitiesGraphic);
