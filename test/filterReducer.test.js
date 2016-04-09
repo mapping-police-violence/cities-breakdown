@@ -11,16 +11,13 @@ const initialState = {
   maxPossiblePopulation: 10000000,
   murderRate: [0, 100],
   population: [0, 10000000],
-  race: constants.ALL_RACES,
+  race: constants.ALL_RACES.map((s) => s.toLowerCase()),
   state: null,
+  selectedTab: 0
 };
 
 // Test Reducer
 describe('filterReducer', () => {
-  it('should return the initial state', () => {
-    testReducer(undefined, {}, initialState);
-  });
-
   it('should handle the CHANGE_STATE action', () => {
     testReducer(initialState, {
       type: constants.CHANGE_STATE,
@@ -61,7 +58,8 @@ describe('filterReducer', () => {
       type: constants.TOGGLE_RACE,
       race: 'black'
     }, assign(initialState, {
-      race: constants.ALL_RACES.filter((race) => race !== 'black'),
+      race: constants.ALL_RACES.map((s) => s.toLowerCase())
+        .filter((race) => race.toLowerCase() !== 'black'),
     }));
 
     testReducer(assign(initialState, {race: []}), {
