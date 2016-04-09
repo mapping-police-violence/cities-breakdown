@@ -35,7 +35,7 @@ const initialState = {
   maxPossiblePopulation: 10000000,
   murderRate: [0, 100],
   population: [0, 10000000],
-  race: ALL_RACES,
+  race: ALL_RACES.map((s) => s.toLowerCase()),
   state: null,
   selectedTab: 0
 };

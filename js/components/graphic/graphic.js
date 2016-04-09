@@ -36,6 +36,9 @@ class Graphic {
     this.group.append('g')
       .attr('class', 'y axis');
 
+    this.tooltip = d3.select(this.el).append('div')
+      .attr('class', 'tooltip');
+
     this.update(data);
   }
 
@@ -78,8 +81,9 @@ class Graphic {
   }
 
   _transformData(data) {
+    console.log(groupBy(data, (d) => d.city.city));
     const transformedData = data.map((datum) => {
-      let group = this._transformGroup(datum.murders);
+      let group = this._transformGroup(datum);
       group.label = datum.city.police_department;
       group.city = datum.city;
       return group;
@@ -87,13 +91,14 @@ class Graphic {
     return transformedData.sort((a, b) => b.total - a.total);
   }
 
-  _transformGroup(data) {
-    if (!data) {
+  _transformGroup(datum) {
+    if (!datum || !datum.murders) {
       return {
         data: [],
         total: 0
       };
     }
+    const data = datum.murders;
     let races = groupBy(data, 'victim_race');
     let x0 = 0;
     const sortedKeys =
@@ -102,7 +107,9 @@ class Graphic {
       const obj = {
         x0: x0,
         x1: x0 + races[race].length,
-        label: race
+        label: race,
+        department: datum.city.police_department,
+        count: races[race].length
       };
       x0 = obj.x1;
       return obj;
@@ -193,12 +200,41 @@ class Graphic {
     victims.enter()
       .append('rect')
       .attr('class', (d) => `race ${d.label}`)
-      .attr('height', y.rangeBand());
+      .attr('height', y.rangeBand())
+      .on('mouseover', this._onMouseover.bind(this))
+      .on('mousemove', this._onMouseover.bind(this))
+      .on('touchstart', this._onMouseover.bind(this))
+      .on('touchmove', this._onMouseover.bind(this))
+      .on('mouseout', this._onMouseout.bind(this));
     victims
       .attr('width', (d) => x(d.x1) - x(d.x0))
       .attr('x', (d) => x(d.x0))
       .style('fill', (d) => this.color(d.label));
     victims.exit().remove();
+  }
+
+  _onMouseover(d) {
+    if (this.tooltipTimeout) {
+      window.clearTimeout(this.tooltipTimeout);
+    }
+
+    this.tooltip
+      .style({
+        opacity: 1,
+        top: d3.event.clientY + 'px',
+        left: d3.event.clientX + 'px'
+      })
+      .html(this._getTooltip(d));
+  }
+
+  _onMouseout() {
+    this.tooltipTimeout = window.setTimeout(() => {
+      this.tooltip.style({ opacity: 0 });
+    }, 200);
+  }
+
+  _getTooltip(d) {
+    return `${d.department} has killed ${d.count} ${d.label.toLowerCase()} people.`;
   }
 }
 
